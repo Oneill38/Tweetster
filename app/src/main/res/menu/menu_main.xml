@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:drawable="http://schemas.android.com/tools">
+    xmlns:drawable="http://schemas.android.com/tools"
+    >
     <item android:id="@+id/action_compose"
         android:orderInCategory="100"
         xmlns:app="http://schemas.android.com/apk/res-auto"
