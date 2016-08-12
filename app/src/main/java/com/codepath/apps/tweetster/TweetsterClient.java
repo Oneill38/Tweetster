@@ -50,14 +50,6 @@ public class TweetsterClient extends OAuthBaseClient {
 		getClient().get(apiUrl, params, handler);
 	}
 
-
-	public void getMyUserInfo(AsyncHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("account/verify_credentials.json");
-		RequestParams params = new RequestParams();
-		// execute the request
-		getClient().get(apiUrl, params, handler);
-	}
-
 	public void postTweet(String myTweet, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/update.json");
 		RequestParams params = new RequestParams();
@@ -72,6 +64,21 @@ public class TweetsterClient extends OAuthBaseClient {
 		params.put("count", 25);
 		params.put("since_id", tweetId);
 		getClient().get(apiUrl, params, handler);
+	}
+
+
+	public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler){
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("screen_name", screenName);
+		getClient().get(apiUrl, params, handler);
+
+	}
+
+	public void getUserInfo(AsyncHttpResponseHandler handler){
+		String apiUrl = getApiUrl("statuses/verify_credentials.json");
+		getClient().get(apiUrl, null, handler);
 	}
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

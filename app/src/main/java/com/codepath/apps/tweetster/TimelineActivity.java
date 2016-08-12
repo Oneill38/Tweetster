@@ -1,5 +1,6 @@
 package com.codepath.apps.tweetster;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -93,6 +94,12 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onProfileView(MenuItem mi){
+        Intent i = new Intent(this, ProfileActivity.class);
+        startActivity(i);
+    }
+
 
     public class TweetsPagerAdapter extends FragmentPagerAdapter{
         private String tabTitles[] = {"Home", "Mentions"};
