@@ -3,6 +3,7 @@ package com.codepath.apps.tweetster;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,11 @@ public class ProfileActivity extends AppCompatActivity {
                 user = User.fromJSON(response);
                 getSupportActionBar().setTitle("@" + user.getScreenName());
                 populateProfileHeader(user);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("DEBUG", errorResponse.toString());
             }
         });
 

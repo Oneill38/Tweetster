@@ -77,7 +77,7 @@ public class TweetsterClient extends OAuthBaseClient {
 	}
 
 	public void getUserInfo(AsyncHttpResponseHandler handler){
-		String apiUrl = getApiUrl("statuses/verify_credentials.json");
+		String apiUrl = getApiUrl("account/verify_credentials.json");
 		getClient().get(apiUrl, null, handler);
 	}
 
