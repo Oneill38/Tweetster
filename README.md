@@ -44,7 +44,7 @@ The following **additional** features are implemented:
 * [ ] List anything else that you can get done to improve the app functionality!
 
 ## Video Walkthrough
-
+![project 4](https://cloud.githubusercontent.com/assets/6576820/17650731/5d126448-6244-11e6-8a46-25f5258cbd5e.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
