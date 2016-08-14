@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.codepath.apps.tweetster.R;
 import com.codepath.apps.tweetster.TimelineActivity;
+import com.codepath.apps.tweetster.TweetsterClient;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -22,6 +23,7 @@ public class TweetFragment extends DialogFragment {
     ImageView profileImage;
     private String profileImageUrl;
     Button btnTweet;
+    TweetsterClient client;
 
     public TweetFragment() {
         // Empty constructor is required for DialogFragment
@@ -67,6 +69,8 @@ public class TweetFragment extends DialogFragment {
                 getDialog().dismiss();
             }
         });
+
+
     }
 
 

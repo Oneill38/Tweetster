@@ -25,10 +25,12 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         client = TweetsterApplication.getRestClient();
-        client.getUserInfo(new JsonHttpResponseHandler(){
+        String screen_name = getIntent().getStringExtra("screen_name");
+        client.getUserInfo(screen_name, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response);
+                Log.d("user", user.getScreenName());
                 getSupportActionBar().setTitle("@" + user.getScreenName());
                 populateProfileHeader(user);
             }
@@ -39,9 +41,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        String screenName = getIntent().getStringExtra("screen_name");
         if(savedInstanceState == null){
-            UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screenName);
+            UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screen_name);
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flContainer, fragmentUserTimeline);

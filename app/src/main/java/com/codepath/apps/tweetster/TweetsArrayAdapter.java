@@ -1,6 +1,8 @@
 package com.codepath.apps.tweetster;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +26,26 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Tweet tweet = getItem(position);
+        final Tweet tweet = getItem(position);
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
         }
 
         ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
-        TextView tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
+        final TextView tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
         TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
+
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                Log.d("Screenname", tweet.getUser().getScreenName());
+                i.putExtra("screen_name", tweet.getUser().getScreenName());
+                getContext().startActivity(i);
+            }
+        });
 
         tvUsername.setText(tweet.getUser().getScreenName());
         tvBody.setText(tweet.getBody());

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.codepath.apps.tweetster.EndlessScrollListener;
 import com.codepath.apps.tweetster.R;
 import com.codepath.apps.tweetster.TweetsArrayAdapter;
 import com.codepath.apps.tweetster.TweetsterApplication;
@@ -35,59 +34,42 @@ public class HomeTimelineFragment extends TweetsListFragment {
     User myUserAccount;
     private TweetsArrayAdapter aTweets;
     SwipeRefreshLayout swipeContainer;
+    Tweet last_tweet;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = TweetsterApplication.getRestClient();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tweets_list, parent, false);
-        lvTweets = (ListView) v.findViewById(R.id.lvTweets);
-        lvTweets.setAdapter(aTweets);
-        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                aTweets.clear();
-                populateTimeline(null);
-                swipeContainer.setRefreshing(false);
-            }
-        });
-
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public boolean onLoadMore(int page, int totalItemsCount) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to your AdapterView
-                if(aTweets.getCount() > 0) {
-                    Tweet newestTweet = aTweets.getItem(0);
-                    populateTimeline(newestTweet.getId());
-                    Log.d("debug", newestTweet.getId().toString());
-                } else {
-                    populateTimeline(null);
-                }
-                // or customLoadMoreDataFromApi(totalItemsCount);
-                return true; // ONLY if more data is actually being loaded; false otherwise.
-            }
-        });
-        populateTimeline(null);
+        popTimeline(null);
         return super.onCreateView(inflater, parent, savedInstanceState);
     }
 
-    private void populateTimeline(Long tweetID){
+    @Override
+    protected void populateTimeline(Long max_id) {
+        if(max_id != null){
+            popTimeline(max_id);
+        }else{
+            popTimeline(null);
+        }
+    }
+
+    @Override
+    protected void refreshTimeline() {
+        popTimeline(null);
+    }
+
+    private void popTimeline(Long tweetID){
         client.getHomeTimeline(tweetID, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 ArrayList<Tweet> tweets = Tweet.fromJSONArray(json);
                 addAll(tweets);
-                Log.d("debug", "Response Found");
             }
 
             @Override
@@ -97,23 +79,4 @@ public class HomeTimelineFragment extends TweetsListFragment {
         });
     }
 
-//    public void getMyUserJson() {
-//        // get the logged-in user's user account info
-//        client.getMyUserInfo(new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-//                getMyUserInfo(json);
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                Log.d("DEBUG", errorResponse.toString());
-//            }
-//        });
-//    }
-//
-//    // the last part of getting the logged-in user's user account info
-//    public void getMyUserInfo(JSONObject json) {
-//        myUserAccount = User.fromJSON(json);
-//    }
 }

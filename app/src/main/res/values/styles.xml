@@ -6,12 +6,21 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
-        <item name="android:textColorPrimaryInverse">#1976d2</item>
+        <item name="android:colorPrimaryDark">#0288D1</item>
+        <item name="android:colorPrimary">#03A9F4</item>
+        <item name="android:colorAccent">#448AFF</item>
+        <item name="android:textColorPrimary">#212121</item>
+        <item name="android:textColorSecondary">#757575</item>
     </style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:colorPrimaryDark">#0288D1</item>
+        <item name="android:colorPrimary">#03A9F4</item>
+        <item name="android:colorAccent">#448AFF</item>
+        <item name="android:textColorPrimary">#212121</item>
+        <item name="android:textColorSecondary">#757575</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
